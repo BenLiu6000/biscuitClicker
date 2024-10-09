@@ -1,0 +1,48 @@
+.canvas {
+    position:absolute;
+    left:50vw;
+    top:50vh;
+}
+
+#canvas0 {
+    position:absolute;
+    transform:translate(-50%,-50%);
+    z-index:0;
+}
+
+#canvas1 {
+    position:absolute;
+    transform:translate(-50%,-50%);
+    z-index:5;
+}
+
+#canvas2 {
+    position:absolute;
+    transform:translate(-50%,-50%);
+    z-index:10;
+}
+
+#canvas3 {
+    position:absolute;
+    transform:translate(-50%,-50%);
+    z-index:15;
+}
+
+#canvas4 {
+    position:absolute;
+    transform:translate(-50%,-50%);
+    z-index:20;
+}
+
+#doughDropCanvas {
+    position:absolute;
+    transform:translate(-50%,-50%);
+    z-index:7;
+}
+
+
+
+.text {
+    position:absolute;
+    white-space:nowrap;
+}
