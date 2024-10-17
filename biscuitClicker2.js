@@ -265,9 +265,6 @@
             displayTexts[i_1].innerHTML = textToDisplay;
             return i_1;
         };
-        let test1 = document.createElement("div")
-        document.body.append(test1)
-        test1.innerHTML = "pineapple"
 
 
         let abbreviations = ["", "K", "M", "B","T","Q","Qn","S","Sp","O","N","D","Ud","Dd","Td"]
