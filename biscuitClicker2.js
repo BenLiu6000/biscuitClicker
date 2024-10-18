@@ -197,6 +197,7 @@
         function displayNumber(valueUpdate, xpos, ypos, magnitude, z = 0, beforeText = "", afterText = "", font = "copperplate", fontColour ="orange") {
             let i = displayNumbers.push(document.createElement("div"));
             let i_1 = i-1
+            console.log(displayNumbers[i-1]);
             text.appendChild(displayNumbers[i_1]);
             displayNumbers[i_1].style.position = "absolute";
 
@@ -491,7 +492,7 @@
             localStorage.setItem("dough1Level",dough1Level.toString());
             localStorage.setItem("oven1Level",oven1Level.toString());
             localStorage.setItem("autoClickerUnlocked",autoClickerUnlocked.toString());
-            localStorage.setItem("autoClickerTime",autoClickerTime());
+            localStorage.setItem("autoClickerTime",autoClickerTime);
         };
         setInterval(saveGame,2000)
 
