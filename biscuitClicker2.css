@@ -1,0 +1,112 @@
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, caption {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+}
+
+body {
+    background-size:5vw 5vw;
+    background-image:
+        linear-gradient(to right,rgba(128, 128, 128, 0.202) 50%, rgba(255, 255, 255, 0.102) 50%),
+        linear-gradient(rgb(194, 194, 194) 50%,white 50%);
+    background-repeat: repeat;
+}
+
+.container{
+    position:absolute;
+    top:0px;
+    left:0px;
+    padding:0px;
+    border:0px;
+    margin:0px;
+}
+
+.canvas {
+    position:absolute;
+    left:50vw;
+    top:50vh;
+    padding:0px;
+    border:0px;
+    margin:0px;
+}
+
+#canvas0 {
+    position:absolute;
+    transform:translate(-50%,-50%);
+    z-index:0;
+}
+
+#canvas1 {
+    position:absolute;
+    transform:translate(-50%,-50%);
+    z-index:5;
+}
+
+#canvas2 {
+    position:absolute;
+    transform:translate(-50%,-50%);
+    z-index:10;
+}
+
+#canvas3 {
+    position:absolute;
+    transform:translate(-50%,-50%);
+    z-index:15;
+}
+
+#canvas4 {
+    position:absolute;
+    transform:translate(-50%,-50%);
+    z-index:20;
+}
+
+#canvas5 {
+    position:absolute;
+    transform:translate(-50%,-50%);
+    z-index:20;
+}
+
+#doughDropCanvas {
+    position:absolute;
+    transform:translate(-50%,-50%);
+    z-index:4;
+}
+
+#patternCanvas {
+    display:none;
+}
+
+
+
+.text {
+    position:absolute;
+    white-space:nowrap;
+    user-select:none;
+    -webkit-user-select:none;
+    -ms-user-select:none;
+    padding:0px;
+    border:0px;
+    margin:0px;
+}
+
+
+.slide-inAnimation {
+    animation-name: slide-in;
+    animation-duration:500ms;
+    clip-path: rect(0% 100% 100% 0%);
+}
+
+@keyframes slide-in {
+    from {
+        translate: -100vw 0;
+        clip-path: rect(0% 200% 100% 100%);
+    }
+    to {
+        translate: 0 0;
+        clip-path: rect(0% 100% 100% 0%);
+    }
+}
