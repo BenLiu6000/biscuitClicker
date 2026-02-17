@@ -1,23 +1,37 @@
 canvas = document.getElementById("canvas");
 ctx = canvas.getContext("2d");
 
-let data = ""
-
-let xhttp = new XMLHttpRequest;
+/*let xhttp = new XMLHttpRequest;
+let data = "";
 xhttp.onreadystatechange = function() {
     if(this.readyState == 4 && this.status == 200) {
         data = xhttp.responseText;
         console.log(data);
     };
 };
-xhttp.open("Get","https://raw.githubusercontent.com/BenLiu6000/biscuitClicker/main/100x100gears_b2.png");
-xhttp.send();
+xhttp.open("Get","https://raw.githubusercontent.com/BenLiu6000/biscuitClicker/master/100x100gears_b2.png");
+xhttp.send();*/
 
 function drawimg(imgName = "", x=0, y=0, w=0, h=0) {
+   /*let xhttp = new XMLHttpRequest;
+    xhttp.onreadystatechange = function() {
+        let img = new Image(w,h);
+        console.log(xhttp.responseText);
+        img.src = xhttp.responseText;
+        console.log(typeof xhttp.responseText);
+        img.onload = () => {
+            ctx.drawImage(img,x,y,w,h);ß
+        };
+    };
+    xhttp.open("Get","https://raw.githubusercontent.com/BenLiu6000/biscuitClicker/master/" + imgName);
+    console.log("https://raw.githubusercontent.com/BenLiu6000/biscuitClicker/master/" + imgName);
+    xhttp.send();*/
+
     let img = new Image(w,h);
-    img.src = imgName;
+    img.src = xhttp.responseText;
+    console.log(typeof xhttp.responseText);
     img.onload = () => {
-        ctx.drawImage(img,x,y,w,h);
+        ctx.drawImage(img,x,y,w,h);ß
     };
 };
 
