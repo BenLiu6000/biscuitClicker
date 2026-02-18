@@ -28,10 +28,10 @@ function drawimg(imgName = "", x=0, y=0, w=0, h=0) {
     xhttp.send();*/
 
     let img = new Image(w,h);
-    img.src = xhttp.responseText;
-    console.log(typeof xhttp.responseText);
+    img.crossOrigin = "Anonymous";
+    img.src = "https://raw.githubusercontent.com/BenLiu6000/biscuitClicker/refs/heads/main/" + imgName;
     img.onload = () => {
-        ctx.drawImage(img,x,y,w,h);ß
+        ctx.drawImage(img,x,y,w,h);
     };
 };
 
@@ -104,7 +104,7 @@ drawimg("hoverCircleYellow_b2.png",130,180,100,100);
 drawimg("hoverRectangleGrey_b2.png",450,355,100,100);
 drawimg("hoverRectangleRed_b2.png",1150,400,100,100);
 drawimg("hoverRectangleYellow_b2.png",1085,400,65,75);
-drawimg("menuButtonsbg_b2.png",0,120,65,400);
+drawimg("menuButtonsBg_b2.png",0,120,65,400);
 
 drawimg("openBuildingsMenuButton_b2.png",1020,400,65,75);
 drawimg("openSettingsMenuButton_b2.png",955,400,65,75);
@@ -135,13 +135,23 @@ png_file x y w h
 */
 
 let downloadButton = document.createElement("anchor");
+document.body.appendChild(downloadButton);
+console.log(downloadButton);
 downloadButton.download = "spriteSheet_b2.png";
 
-downloadButton.innerHTML = "press spacebar";
-downloadButton.crossOrigin = "anonymous";
+downloadButton.textContent = "press spacebar";
+downloadButton.style.display = "block";
+downloadButton.style.position = "fixed";
+downloadButton.style.fontSize = 50;
+downloadButton.style.top = 1000;
+downloadButton.style.width = 200;
+downloadButton.style.height = 200;
 
 document.addEventListener("keydown", (e) => {
     if(e.key == " " || "Spacebar") {
         downloadButton.href = canvas.toDataURL();
+        console.log(canvas.toDataURL());
+        downloadButton.textContent = "press here to download :>";
+        console.log(downloadButton.getBoundingClientRect());
     };
 });
