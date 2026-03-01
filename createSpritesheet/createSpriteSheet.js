@@ -28,8 +28,8 @@ function drawimg(imgName = "", x=0, y=0, w=0, h=0) {
     xhttp.send();*/
 
     let img = new Image(w,h);
-    img.crossOrigin = "Anonymous";
-    img.src = "https://raw.githubusercontent.com/BenLiu6000/biscuitClicker/refs/heads/main/" + imgName;
+    img.crossOrigin = "anonymous";
+    img.src = `https://github.com/BenLiu6000/biscuitClicker/blob/spriteSheet/createSpritesheet/${imgName}?raw=true&cache-bust=123`;
     img.onload = () => {
         ctx.drawImage(img,x,y,w,h);
     };
