@@ -1,6 +1,5 @@
-//note that the loop for drawing and updating the falling tin is located in graphics.js and is called updateDoughDropCanvas (its combined with the falling dough)
 
-let tins = [];
+
 function drawTinDropBar(amountFilled) {
     if(drawBar == false) {return};
     canvases[4].ctx.clearRect(100,380,200,10);
@@ -17,7 +16,8 @@ function drawTinDropBar(amountFilled) {
     canvases[4].ctx.stroke();
 };
 
-let fallingTinBiscuitImage = "fallingTinBiscuit_b2.png";
+let fallingTinBiscuitImage = new Image();
+fallingTinBiscuitImage.src = "fallingTinBiscuit_b2.png";
 
 class Tin {
     constructor(x,y,width,height,rotation=0,speed=[0,0],acceleration=[0,0],rotationSpeed=0) {
@@ -59,7 +59,7 @@ class Tin {
         doughDropCanvasCtx.save();
         doughDropCanvasCtx.translate(this.x+this.width/2, this.y+this.height/2);
         doughDropCanvasCtx.rotate(this.rotation);
-        drawSprite(fallingTinBiscuitImage, -this.width/2, -this.height/2, this.width, this.height,doughDropCanvasCtx);
+        doughDropCanvasCtx.drawImage(fallingTinBiscuitImage, -this.width/2, -this.height/2, this.width, this.height);
         doughDropCanvasCtx.restore();
     };
 
