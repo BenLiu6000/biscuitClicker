@@ -1,0 +1,23 @@
+{
+  "name": "biscuitclicker2",
+  "version": "1.0.0",
+  "description": "to create the spritesheet for biscuit clicker",
+  "homepage": "https://github.com/BenLiu6000/biscuitClicker#readme",
+  "bugs": {
+    "url": "https://github.com/BenLiu6000/biscuitClicker/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BenLiu6000/biscuitClicker.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
