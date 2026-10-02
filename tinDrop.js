@@ -79,6 +79,9 @@ class Tin {
 
         if(tin.y > 500) {
             tins.splice(tin.index,1);
+            for(let i = tin.index; i<tins.length; i++) {
+                tins[i].index -= 1;
+            };
         };
 
     };
@@ -96,11 +99,14 @@ class Tin {
         tin.timesClicked += 1;
 
         if(tin.timesClicked > 4) {          //tin breaks/opens 
-            tins.splice(tin.index,1);
+            tins.splice(tin.index,1);        //deletes the tin
+            for(let i = tin.index; i<tins.length; i++) {
+                tins[i].index -= 1;
+            };
             let timeGainedBiscuits = (Math.random()*60) + 60;  //gain between 60 and 120 seconds of biscuits
             biscuits += biscuitsPerSecond*timeGainedBiscuits;
             
-            iDNV = displayNumbers.length;  // find iDNV around the display numbers section in functions.js :3
+            iDNV = displayNumbers.length;  // find iDNV around the display numbers section in functions.js 
             displayNumber(()=>{return displayNumbers[iDNV].fixedValue}, tin.x, tin.y, 15, 11, "", " biscuits", "copperplate", "#e8f4fa", true, biscuitsPerSecond*timeGainedBiscuits, true);
                                    // i will be defined when looping through the function that updates display numbers values which is when the get value function for a display number is run
         };

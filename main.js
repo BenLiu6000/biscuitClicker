@@ -150,6 +150,11 @@ let factoryCost = 35000;
 let factoryCostMulti = 1.3;
 let canAffordFactory = true;
 
+let volcanoes = 0;
+let volcanoCost = 500000;
+let volcanoCostMulti = 1.3;
+let canAffordVolcano = true;
+
 
 
 
@@ -208,6 +213,18 @@ let tin1CostBiscuits = 100000;
 let tin1Level = 0;
 let tin1Unlocked = false;
 
+let anti1CostDough = 125000;
+let anti1CostBiscuits = 100000;
+let anti1Level = 0;
+let anti1Unlocked = false;
+
+let tin2CostDough = 125000;
+let tin2CostBiscuits = 100000;
+let tin2CostDoughMulti = 8;
+let tin2CostBiscuitsMulti = 8;
+let tin2Level = 0;
+let tin2Unlocked = false;
+
 //tin drop
 let tinDropUnlocked = false; 
 let tinClicksRequired = 30;
@@ -233,8 +250,11 @@ function clickedDough() {
     if(tin1Level > 0) {
         if (tinClickCount >= tinClicksRequired) {
             tinClickCount = 0;
-            let index = tins.push(new Tin((Math.random()*360)+140, -30, 80, 80, (Math.random()*(4*Math.PI))-(2*Math.PI), [(Math.random()*200)-100,0], [0,400], (Math.random()*(4*Math.PI))-(2*Math.PI))) - 1
-            tins[index].index = index;
+            for(let i=0; i<=tin2Level; i++) {
+                let index = tins.push(new Tin((Math.random()*360)+140, -30, 80, 80, (Math.random()*(4*Math.PI))-(2*Math.PI), [(Math.random()*200)-100,0], [0,400], (Math.random()*(4*Math.PI))-(2*Math.PI))) - 1;
+                tins[index].index = index;
+            };
+            
         };
         drawTinDropBar(tinClickCount/tinClicksRequired);
     };
@@ -243,7 +263,7 @@ function clickedDough() {
 
 function calculateBiscuitsPerSecond() {
     if(recalculateBiscuitsPerSecond == true) {
-    biscuitsPerSecond = 1+(ovens*oven1Bonus)+(bakeries*15*bakery1Bonus)+(factories * 90);
+    biscuitsPerSecond = 1+(ovens*oven1Bonus)+(bakeries*15*bakery1Bonus)+(factories * 90)+(volcanoes * 1200);
     recalculateBiscuitsPerSecond = false;
     };
 };

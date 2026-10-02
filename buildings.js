@@ -52,6 +52,11 @@ function openBuildingsMenu() { //open buildings menu
         } else {
             spritesCanvas2[factoryBuyButtonIndex] = new spawnSprite("buyBuildingButtonFalse_b2.png",20,230,360,60,canvases[2].ctx);
         };
+        if(canAffordVolcano == true) {
+            spritesCanvas2[volcanoBuyButtonIndex] = new spawnSprite("buyBuildingButtonTrue_b2.png",20,320,360,60,canvases[2].ctx);
+        } else {
+            spritesCanvas2[volcanoBuyButtonIndex] = new spawnSprite("buyBuildingButtonFalse_b2.png",20,320,360,60,canvases[2].ctx);
+        };
         redrawCanvas(canvases[2].ctx,spritesCanvas2);
     };
 
@@ -71,6 +76,11 @@ function openBuildingsMenu() { //open buildings menu
             spritesCanvas2[factoryBuyButtonIndex] = new spawnSprite("sellBuildingButtonTrue_b2.png",20,230,360,60,canvases[2].ctx);
         } else {
             spritesCanvas2[factoryBuyButtonIndex] = new spawnSprite("buyBuildingButtonFalse_b2.png",20,230,360,60,canvases[2].ctx);
+        };
+        if(volcanoes > 0) {
+            spritesCanvas2[volcanoBuyButtonIndex] = new spawnSprite("sellBuildingButtonTrue_b2.png",20,320,360,60,canvases[2].ctx);
+        } else {
+            spritesCanvas2[volcanoBuyButtonIndex] = new spawnSprite("buyBuildingButtonFalse_b2.png",20,320,360,60,canvases[2].ctx);
         };
         redrawCanvas(canvases[2].ctx,spritesCanvas2);
     };
@@ -99,6 +109,13 @@ function openBuildingsMenu() { //open buildings menu
         } else {
             canAffordFactory = false;
         };
+
+        if (biscuits >= getCost(volcanoCost,volcanoCostMulti,biscuits,volcanoes)) {
+            canAffordVolcano = true;
+        } else {
+            canAffordVolcano = false;
+        };
+
         drawBuyBuildingButtons();
     };
 
@@ -327,7 +344,7 @@ function openBuildingsMenu() { //open buildings menu
 
     let factoryBuyButtonIndex = (spritesCanvas2.push(new spawnSprite("buyBuildingButtonFalse_b2.png",20,230,360,60,canvases[2].ctx)))-1;
     spritesCanvas3.push(new spawnSprite("70x60factory_b2.png",25,235,60,50,canvases[3].ctx));
-    let factoryCostText = displayNumber(function(){return getCost(factoryCost,factoryCostMulti,biscuits,factories)},90,250,20,11,""," biscuits","copperplate","black");
+    let factoryCostText = displayNumber(function(){return getCost(factoryCost,factoryCostMulti,biscuits,factories)},90,260,20,11,""," biscuits","copperplate","black");
     displayNumbers[factoryCostText].classList.add("slide-inAnimation");  //so the text slides in with the rest of the menu
     let factoryAmountText = displayNumber(function(){return factories},90,235,20,11,""," factories","copperplate","black",false);
     displayNumbers[factoryAmountText].classList.add("slide-inAnimation");
@@ -345,9 +362,9 @@ function openBuildingsMenu() { //open buildings menu
 
     buttons.push(new makeButton(20,230,360,60,function() {
         blinkSprite("hoverRectangleGrey_b2.png",20,230,360,60,100,canvases[5].ctx);
-        if (sellBuildings) { //sell bakery
+        if (sellBuildings) { //sell factory
             if (factories > 0) {
-                let amountToSell = buyBuildingAmount == "max"? bakeries:buyBuildingAmount;  //get the amount of factories to sell if set to max
+                let amountToSell = buyBuildingAmount == "max"? factories:buyBuildingAmount;  //get the amount of factories to sell if set to max
                 factories -= amountToSell;
                 biscuits += getCost(factoryCost,factoryCostMulti,biscuits,factories);
                 factoryCost *= (1/factoryCostMulti)**amountToSell;
@@ -357,11 +374,55 @@ function openBuildingsMenu() { //open buildings menu
             };
             return;
         };
-        if(biscuits >= factoryCost) { //buy bakery
+        if(biscuits >= factoryCost) { //buy factory
             biscuits -= getCost(factoryCost,factoryCostMulti,biscuits,factories);  //subtract the cost of the bakeries
             let amountToBuy = buyBuildingAmount == "max"? getAmountToBuy(factoryCost,factoryCostMulti,biscuits,factories):buyBuildingAmount;  //get the amount ot buy if buying max
             factories += amountToBuy;
             factoryCost *= factoryCostMulti**amountToBuy;
+            recalculateBiscuitsPerSecond = true;
+            updateDisplayNumbers();
+            return;
+        };
+    }));;
+
+
+    let volcanoBuyButtonIndex = (spritesCanvas2.push(new spawnSprite("buyBuildingButtonFalse_b2.png",20,320,360,60,canvases[2].ctx)))-1;
+    spritesCanvas3.push(new spawnSprite("70x60factory_b2.png",25,325,60,50,canvases[3].ctx));
+    let volcanoCostText = displayNumber(function(){return getCost(volcanoCost,volcanoCostMulti,biscuits,volcanoes)},90,350,20,11,""," biscuits","copperplate","black");
+    displayNumbers[volcanoCostText].classList.add("slide-inAnimation");  //so the text slides in with the rest of the menu
+    let volcanoAmountText = displayNumber(function(){return volcanoes},90,325,20,11,""," volcanoes","copperplate","black",false);
+    displayNumbers[volcanoAmountText].classList.add("slide-inAnimation");
+    hoverAreas.push(new makeHoverArea(20,320,360,60,
+        function() {
+            if(sellBuildings) {          //on enter
+                spawnSprite("hoverRectangleRed_b2.png",20,320,360,60,canvases[4].ctx);
+            } else {
+                spawnSprite("hoverRectangleYellow_b2.png",20,320,360,60,canvases[4].ctx);
+            };
+        },
+        function() {
+            canvases[4].ctx.clearRect(20,320,360,60);    //on exit
+        }));
+
+    buttons.push(new makeButton(20,320,360,60,function() {
+        blinkSprite("hoverRectangleGrey_b2.png",20,320,360,60,100,canvases[5].ctx);
+        if (sellBuildings) { //sell volcano
+            if (volcanoes > 0) {
+                let amountToSell = buyBuildingAmount == "max"? volcanoes:buyBuildingAmount;  //get the amount of factories to sell if set to max
+                volcanoes -= amountToSell;
+                biscuits += getCost(volcanoCost,volcanoCostMulti,biscuits,volcanoes);
+                volcanoCost *= (1/factoryCostMulti)**amountToSell;
+                recalculateBiscuitsPerSecond = true;
+                updateDisplayNumbers();
+                return;
+            };
+            return;
+        };
+        if(biscuits >= volcanoCost) { //buy volcano
+            biscuits -= getCost(volcanoCost,volcanoCostMulti,biscuits,volcanoes);  //subtract the cost of the bakeries
+            let amountToBuy = buyBuildingAmount == "max"? getAmountToBuy(volcanoCost,volcanoCostMulti,biscuits,volcanoes):buyBuildingAmount;  //get the amount ot buy if buying max
+            volcanoes += amountToBuy;
+            volcanoCost *= volcanoCostMulti**amountToBuy;
             recalculateBiscuitsPerSecond = true;
             updateDisplayNumbers();
             return;
@@ -386,12 +447,16 @@ function openBuildingsMenu() { //open buildings menu
         text.removeChild(displayNumbers[bakeryAmountText]);
         text.removeChild(displayNumbers[factoryCostText]);
         text.removeChild(displayNumbers[factoryAmountText]);
+        text.removeChild(displayNumbers[volcanoCostText]);
+        text.removeChild(displayNumbers[volcanoAmountText]);
         multiSplice(displayNumbers,[ovenCostText,ovenAmountText,
             bakeryCostText,bakeryAmountText,
-            factoryCostText,factoryAmountText]);
+            factoryCostText,factoryAmountText,
+            volcanoCostText,volcanoAmountText]);
         multiSplice(displayNumbersUpdateFunctions,[ovenCostText,ovenAmountText,
             bakeryCostText,bakeryAmountText,
-            factoryCostText,factoryCostText]);
+            factoryCostText,factoryAmountText,
+            volcanoCostText,volcanoAmountText]);
         clearInterval(drawBuyBuildingButtonsLoop);
         spritesCanvas1 = [];
         spritesCanvas2 = [];
@@ -420,6 +485,7 @@ function openBuildingsMenu() { //open buildings menu
     }));
 
 };
+
 
 
 

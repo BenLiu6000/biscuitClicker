@@ -179,13 +179,11 @@ const posInSheet = {    //links each image file name with its corresponding posi
 };
 
 function drawSprite(imgName,xpos,ypos,width,height,ctx) {
-    console.log(imgName)
     sheetPos = posInSheet[imgName];
     ctx.drawImage(spriteSheet,
         sheetPos[0],sheetPos[1],sheetPos[2],sheetPos[3],
         xpos,ypos,width,height
     );
-    console.log(`${imgName} : ${sheetPos}`);
 }
 
 //sprite declaration

@@ -4,11 +4,11 @@ function saveGame() {
     localStorage.setItem("dough",dough.toString());
     localStorage.setItem("biscuits",biscuits.toString());
 
-    localStorage.setItem("ovens",ovens.toString());
+    localStorage.setItem("ovens",ovens.toString());             //buildings
     localStorage.setItem("bakeries",bakeries.toString());
     localStorage.setItem("factories",factories.toString());
 
-    localStorage.setItem("upgradesUnlocked",upgradesUnlocked.toString());
+    localStorage.setItem("upgradesUnlocked",upgradesUnlocked.toString());               //upgrades
     localStorage.setItem("dough1Level",dough1Level.toString());
     localStorage.setItem("oven1Level",oven1Level.toString());
     localStorage.setItem("autoClickerUnlocked",autoClickerUnlocked.toString());
@@ -16,6 +16,8 @@ function saveGame() {
     localStorage.setItem("autoClicker2Level",autoClicker2Level.toString());
     localStorage.setItem("bakery1Level",bakery1Level.toString());
     localStorage.setItem("tin1Level",tin1Level.toString());
+    localStorage.setItem("anti1Level",anti1Level.toString());
+    localStorage.setItem("tin2Level",tin2Level.toString());
 
     localStorage.setItem("currentTime",Date.now().toString());
 };
@@ -68,6 +70,14 @@ function loadData() {                                                           
     tin1Unlocked = dough1Level>=10? true:false;
     tin1Level = Number(localStorage.getItem("tin1Level"));
 
+    anti1Unlocked = tin1Level==1? true:false;
+    anti1Level = Number(localStorage.getItem("anti1Level"));
+
+    tin2Unlocked = anti1Level==1? true:false;
+    tin2Level = Number(localStorage.getItem("tin2Level"));
+    tin2CostBiscuits = tin2CostBiscuits * (tin2CostBiscuitsMulti**tin2Level);
+    tin2CostDough = tin2CostDough * (tin2CostDoughMulti**tin2Level);
+
     calculateDoughClickAmount();
     calculateBiscuitsPerSecond();
 
@@ -75,7 +85,7 @@ function loadData() {                                                           
     let doughGained = (timePassed*doughClickAmount*autoClicker2Bonus*1000)/(autoClickerTime);
     let biscuitsGained = timePassed*biscuitsPerSecond;
 
-    if(biscuitsGained > doughGained) {      //subtract biscuits gained from dough gained
+    if(biscuitsGained > doughGained) {   
         biscuitsGained = doughGained;
         doughGained = 0;
     } else {

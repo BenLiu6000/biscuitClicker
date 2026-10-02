@@ -236,10 +236,10 @@ function openUpgradesMenu() {                                        //opens upg
             autoClicker2TitleText = displayText("Clickier Clicker",380,20,20,21,"copperplate","white");
             autoClicker2DescriptionText = displayText("Doubles amount of dough from <br>autoclicker",370,100,10,21,"copperplate","white");
             autoClicker2ItalicText = displayText("<i>Found the settings button</i>",370,185,7,21,"copperplate","white");
-            autoClicker2CostBiscuitsText = displayNumber(function(){return autoClicker2CostBiscuits},410,300,15,21,""," biscuits","copperplate","white");
-            autoClicker2CostDoughText = displayNumber(function(){return autoClicker2CostDough},370,280,15,21,"Cost: "," dough","copperplate","white");
-            autoClicker2BonusText = displayNumber(function(){return autoClicker2Bonus},370,265,12,21,"Current bonus: ", "x", "copperplate","white");
-            autoClicker2LevelText = displayNumber(function(){return autoClicker2Level},370,250,12,21,"Current level: ", "/10", "copperplate","white",false);
+            autoClicker2CostBiscuitsText = displayNumber(function(){return autoClicker2CostBiscuits},410,280,15,21,""," biscuits","copperplate","white");
+            autoClicker2CostDoughText = displayNumber(function(){return autoClicker2CostDough},370,265,15,21,"Cost: "," dough","copperplate","white");
+            autoClicker2BonusText = displayNumber(function(){return autoClicker2Bonus},370,250,12,21,"Current bonus: ", "x", "copperplate","white");
+            autoClicker2LevelText = displayNumber(function(){return autoClicker2Level},370,235,12,21,"Current level: ", "/10", "copperplate","white",false);
             },
         function(){   //on mouse exit
             canvases[4].ctx.clearRect(0,0,700,400);
@@ -342,15 +342,15 @@ function openUpgradesMenu() {                                        //opens upg
             let tin1CostDoughText;
             let tin1CostBiscuitsText;
         
-            hoverAreas.push(new makeHoverArea(180,75,40,40,
+            hoverAreas.push(new makeHoverArea(185,75,40,40,
             function() { //on mouse enter
-                spawnSprite("hoverCircleYellow_b2.png",180,75,40,40,canvases[4].ctx);
+                spawnSprite("hoverCircleYellow_b2.png",185,75,40,40,canvases[4].ctx);
                 canvases[4].ctx.fillStyle = "black";
                 canvases[4].ctx.fillRect(225,75,200,300)
                 tin1TitleText = displayText("Tin Drop 1",270,80,20,21,"copperplate","white");
                 tin1DescriptionText = displayText("Drops a tin of dough and biscuits <br>which can be opened by clicking on",230,160,10,21,"copperplate","white");
-                tin1CostDoughText = displayNumber(function(){return tin1CostDough},230,320,15,21,"Cost: "," dough","copperplate","white");
-                tin1CostBiscuitsText = displayNumber(function(){return tin1CostBiscuits},275,340,15,21,""," biscuits","copperplate","white");
+                tin1CostDoughText = displayNumber(function(){return tin1CostDough},230,320,15,21,"Cost: "," dough","copperplate","white", false);
+                tin1CostBiscuitsText = displayNumber(function(){return tin1CostBiscuits},275,340,15,21,""," biscuits","copperplate","white", false);
             },
             function() { //on mouse exit
                 canvases[4].ctx.clearRect(0,0,700,400);
@@ -363,18 +363,122 @@ function openUpgradesMenu() {                                        //opens upg
                 multiSplice(displayNumbersUpdateFunctions, [tin1CostBiscuitsText, tin1CostDoughText]);
             }));
         
-            buttons.push(new makeButton(180,75,40,40,function() {
-                blinkSprite("hoverCircleGrey_b2.png",180,75,40,40,100,canvases[5].ctx);
+            buttons.push(new makeButton(185,75,40,40,function() {
+                blinkSprite("hoverCircleGrey_b2.png",185,75,40,40,100,canvases[5].ctx);
                 if(biscuits >= tin1CostBiscuits && dough >= tin1CostDough && tin1Level < 1) {
                     biscuits -= tin1CostBiscuits;
+                    dough -= tin1CostDough;
                     tin1Level += 1;
                     tinDropUnlocked = true;
                     tinClickAmount = 0;
+                    if(!golden1Unlocked) {
+                        anti1Unlocked = true;
+                        drawAnti1();
+                    };
                     updateDisplayNumbers();
                 };
             }));
             };
             if(tin1Unlocked){drawTin1()};
+
+
+
+            let buyAnti1ButtonIndex;                                                                     //anti-biscuit upgrade 1
+            function drawAnti1() {
+                spritesCanvas3.push(new spawnSprite("fallingTinBiscuit_b2.png",260,80,30,30,canvases[3].ctx));                                            //dough 1
+                buyTin1ButtonIndex = spritesCanvas2.push(new spawnSprite("buyUpgradeButtonTrue_b2.png",255,75,40,40,canvases[2].ctx))-1;
+            
+                let anti1TitleText;
+                let anti1DescriptionText;
+                let anti1CostDoughText;
+                let anti1CostBiscuitsText;
+            
+                hoverAreas.push(new makeHoverArea(255,75,40,40,
+                function() { //on mouse enter
+                    spawnSprite("hoverCircleYellow_b2.png",255,75,40,40,canvases[4].ctx);
+                    canvases[4].ctx.fillStyle = "black";
+                    canvases[4].ctx.fillRect(300,75,200,300)
+                    anti1TitleText = displayText("anti-biscuit test :>",345,80,20,21,"copperplate","white");
+                    anti1DescriptionText = displayText("Drops a tin of dough and biscuits <br>which can be opened by clicking on",305,160,10,21,"copperplate","white");
+                    anti1CostDoughText = displayNumber(function(){return tin1CostDough},305,320,15,21,"Cost: "," dough","copperplate","white");
+                    anti1CostBiscuitsText = displayNumber(function(){return tin1CostBiscuits},350,340,15,21,""," biscuits","copperplate","white");
+                },
+                function() { //on mouse exit
+                    canvases[4].ctx.clearRect(0,0,700,400);
+                    text.removeChild(displayTexts[anti1TitleText]);
+                    text.removeChild(displayTexts[anti1DescriptionText]);
+                    text.removeChild(displayNumbers[anti1CostBiscuitsText]);
+                    text.removeChild(displayNumbers[anti1CostDoughText]);
+                    multiSplice(displayTexts, [anti1TitleText,anti1DescriptionText]);
+                    multiSplice(displayNumbers, [anti1CostBiscuitsText,anti1CostDoughText])
+                    multiSplice(displayNumbersUpdateFunctions, [anti1CostBiscuitsText, anti1CostDoughText]);
+                }));
+            
+                buttons.push(new makeButton(255,75,40,40,function() {
+                    blinkSprite("hoverCircleGrey_b2.png",255,75,40,40,100,canvases[5].ctx);
+                    if(biscuits >= anti1CostBiscuits && dough >= anti1CostDough && anti1Level < 1) {
+                        biscuits -= anti1CostBiscuits;
+                        golden1Level += 1;
+                        if(!tin2Unlocked) {
+                            tin2Unlocked = true;
+                            drawTin2();
+                        };
+                        updateDisplayNumbers();
+                    };
+                }));
+            };
+            if(tin1Unlocked){drawAnti1()};
+
+
+
+            let buyTin2ButtonIndex;                                                                     //tin 1
+            function drawTin2() {
+            spritesCanvas3.push(new spawnSprite("fallingTinBiscuit_b2.png",335,80,30,30,canvases[3].ctx));                                            //dough 1
+            buyTin2ButtonIndex = spritesCanvas2.push(new spawnSprite("buyUpgradeButtonTrue_b2.png",330,75,40,40,canvases[2].ctx))-1;
+        
+            let tin2TitleText;
+            let tin2DescriptionText;
+            let tin2CostDoughText;
+            let tin2CostBiscuitsText;
+        
+            hoverAreas.push(new makeHoverArea(335,75,40,40,
+            function() { //on mouse enter
+                spawnSprite("hoverCircleYellow_b2.png",335,75,40,40,canvases[4].ctx);
+                canvases[4].ctx.fillStyle = "black";
+                canvases[4].ctx.fillRect(375,75,200,300)
+                tin2TitleText = displayText("tin2 test",420,80,20,21,"copperplate","white");
+                tin2DescriptionText = displayText("Drops a tin of dough and biscuits <br>which can be opened by clicking on",380,160,10,21,"copperplate","white");
+                tin2CostDoughText = displayNumber(function(){return tin2CostDough},380,320,15,21,"Cost: "," dough","copperplate","white");
+                tin2CostBiscuitsText = displayNumber(function(){return tin2CostBiscuits},425,340,15,21,""," biscuits","copperplate","white");
+                tin2BonusText = displayNumber(function(){return tin2Level},380,305,12,21,"Current bonus: +","","copperplate","white");
+                tin2LevelText = displayNumber(function(){return tin2Level},380,290,12,21,"Current level: ","","copperplate","white");
+            },
+            function() { //on mouse exit
+                canvases[4].ctx.clearRect(0,0,700,400);
+                text.removeChild(displayTexts[tin2TitleText]);
+                text.removeChild(displayTexts[tin2DescriptionText]);
+                text.removeChild(displayNumbers[tin2CostBiscuitsText]);
+                text.removeChild(displayNumbers[tin2CostDoughText]);
+                text.removeChild(displayNumbers[tin2BonusText]);
+                text.removeChild(displayNumbers[tin2LevelText]);
+                multiSplice(displayTexts, [tin2TitleText,tin2DescriptionText]);
+                multiSplice(displayNumbers, [tin2CostBiscuitsText, tin2CostDoughText, tin2BonusText, tin2LevelText])
+                multiSplice(displayNumbersUpdateFunctions, [tin2CostBiscuitsText, tin2CostDoughText, tin2LevelText, tin2BonusText]);
+            }));
+        
+            buttons.push(new makeButton(335,75,40,40,function() {
+                blinkSprite("hoverCircleGrey_b2.png",335,75,40,40,100,canvases[5].ctx);
+                if(biscuits >= tin2CostBiscuits && dough >= tin2CostDough && tin2Level < 10) {
+                    biscuits -= tin2CostBiscuits;
+                    dough -= tin2CostDough;
+                    tin2CostDough *= tin2CostDoughMulti;
+                    tin2CostBiscuits *= tin2CostBiscuitsMulti;
+                    tin2Level += 1;
+                    updateDisplayNumbers();
+                };
+            }));
+            };
+            if(tin2Unlocked){drawTin2()};
         
 
 
@@ -459,7 +563,7 @@ function openUpgradesMenu() {                                        //opens upg
             }};
 
         if(tin1Unlocked) {
-            if (tin1Level < 1) {                                                                                     //bakery 1
+            if (tin1Level < 1) {                                                                                     //tin 1
                 if(dough >= tin1CostDough && biscuits >= tin1CostBiscuits) {
                     canvases[2].ctx.clearRect(180,75,40,40);
                     spritesCanvas2[buyTin1ButtonIndex] = new spawnSprite("buyUpgradeButtonTrue_b2.png",180,75,40,40,canvases[2].ctx);
@@ -471,6 +575,36 @@ function openUpgradesMenu() {                                        //opens upg
                 canvases[2].ctx.clearRect(180,75,40,40);
                 spritesCanvas2[buyTin1ButtonIndex] = new spawnSprite("buyUpgradeButtonFalse_b2.png",180,75,40,40,canvases[2].ctx);
                 spritesCanvas3[buyTin1ButtonIndex] = new spawnSprite("upgradeMaxed_b2.png",180,75,40,40,canvases[3].ctx);
+            }};
+
+        if(anti1Unlocked) {
+            if (anti1Level < 1) {                                                                                     //tin 1
+                if(dough >= anti1CostDough && biscuits >= anti1CostBiscuits) {
+                    canvases[2].ctx.clearRect(255,75,40,40);
+                    spritesCanvas2[buyAnti1ButtonIndex] = new spawnSprite("buyUpgradeButtonTrue_b2.png",255,75,40,40,canvases[2].ctx);
+                } else {
+                    canvases[2].ctx.clearRect(255,75,40,40);
+                    spritesCanvas2[buyAnti1ButtonIndex] = new spawnSprite("buyUpgradeButtonFalse_b2.png",255,75,40,40,canvases[2].ctx);
+                };
+            } else {
+                canvases[2].ctx.clearRect(255,75,40,40);
+                spritesCanvas2[buyAnti1ButtonIndex] = new spawnSprite("buyUpgradeButtonFalse_b2.png",255,75,40,40,canvases[2].ctx);
+                spritesCanvas3[buyAnti1ButtonIndex] = new spawnSprite("upgradeMaxed_b2.png",255,75,40,40,canvases[3].ctx);
+            }};
+
+        if(tin2Unlocked) {
+            if (tin2Level < 10) {                                                                                     //tin 1
+                if(dough >= tin2CostDough && biscuits >= tin2CostBiscuits) {
+                    canvases[2].ctx.clearRect(330,75,40,40);
+                    spritesCanvas2[buyTin2ButtonIndex] = new spawnSprite("buyUpgradeButtonTrue_b2.png",330,75,40,40,canvases[2].ctx);
+                } else {
+                    canvases[2].ctx.clearRect(330,75,40,40);
+                    spritesCanvas2[buyTin2ButtonIndex] = new spawnSprite("buyUpgradeButtonFalse_b2.png",330,75,40,40,canvases[2].ctx);
+                };
+            } else {
+                canvases[2].ctx.clearRect(330,75,40,40);
+                spritesCanvas2[buyTin2ButtonIndex] = new spawnSprite("buyUpgradeButtonFalse_b2.png",330,75,40,40,canvases[2].ctx);
+                spritesCanvas3[buyTin2ButtonIndex] = new spawnSprite("upgradeMaxed_b2.png",330,75,40,40,canvases[3].ctx);
             }};
     };
 
